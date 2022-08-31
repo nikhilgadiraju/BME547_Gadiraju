@@ -1,1 +1,3 @@
-# BME547_Gadiraju
+# Patient Health Database
+
+Author: Nikhil Gadiraju
