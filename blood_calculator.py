@@ -19,11 +19,15 @@ def interface():
         elif choice == "3":
             totchol_driver()
 
-# Create HDL functions
+# Input and Output functions
 def input_val(label):
     input_val = input("Enter the {} value: ".format(label))
     return int(input_val)
 
+def output_result(label, value, charac):
+    print("The results for {} value of {} is {}".format(label, value, charac))
+
+# HDL functions
 def check_HDL(param):
     if param >= 60:
         return "normal"
@@ -31,9 +35,6 @@ def check_HDL(param):
         return "borderline low"
     else:
         return "low"
-
-def output_result(label, value, charac):
-    print("The results for {} value of {} is {}".format(label, value, charac))
 
 def HDL_driver(): # Driver functions essentially call other functions
     hdl_value = input_val("HDL")
