@@ -2,12 +2,15 @@
 def interface():
     print("Blood Calculator")
     print("Options:")
+    print("1 - Analyze HDL")
     print("9 - Quit")
     keep_running = True
     while keep_running:
         choice = input("Enter choice: ")
         if choice == "9":
             return
+        elif choice == "1":
+            HDL_driver()
 
 def input_HDL():
     HDL_input = input("Enter the HDL value: ")
