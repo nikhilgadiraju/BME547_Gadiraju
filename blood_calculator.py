@@ -21,5 +21,13 @@ def check_HDL(param):
     else:
         return "Low"
 
+def output_HDL_result(hdl_value, charac):
+    print("The results for an HDL value of {} is {}".format(hdl_value, charac))
+
+def HDL_driver(): # Driver functions essentially call other functions
+    hdl_value = input_HDL()
+    answer = check_HDL(hdl_value)
+    output_HDL_result(hdl_value, answer)
+
 #%% Function Calls
 interface()
