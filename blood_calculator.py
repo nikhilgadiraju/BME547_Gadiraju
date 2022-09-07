@@ -1,3 +1,6 @@
+print("This is the blood_calculator.py module.")
+print("Python thinks this is called {}".format(__name__))
+
 #%% Function Definitions
 # Define interface function
 def interface():
@@ -52,7 +55,6 @@ def check_LDL(param):
     else:
         return "normal"
 
-
 def LDL_driver(): # Driver functions essentially call other functions
     ldl_value = input_val("LDL")
     answer = check_LDL(ldl_value)
@@ -73,4 +75,5 @@ def totchol_driver(): # Driver functions essentially call other functions
     output_result("a total cholesterol", totchol_value, answer)
 
 #%% Function Calls
-interface()
+if __name__ == "__main__":
+    interface()
