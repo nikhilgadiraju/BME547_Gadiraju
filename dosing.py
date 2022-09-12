@@ -36,7 +36,10 @@ def dose_accuracy(weight, dosage_mg_first_day):
     print("  the correct dosage is {:.1f} mg the first day"
           .format(dosage_mg_first_day))
 
-if __name__ == '__main__':
+def driver():
     diagnosis, weight_input = interface()
     weight, dosage_mg_first_day = dose_amount(diagnosis, weight_input)
     dose_accuracy(weight, dosage_mg_first_day)
+
+if __name__ == '__main__':
+    driver()
