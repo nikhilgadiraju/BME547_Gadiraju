@@ -73,4 +73,5 @@ def totchol_driver(): # Driver functions essentially call other functions
     output_result("a total cholesterol", totchol_value, answer)
 
 #%% Function Calls
-interface()
+if __name__ == "__main__":
+    interface()
