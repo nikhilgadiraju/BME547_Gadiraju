@@ -25,4 +25,4 @@ def test_add_patient():
     answer = add_patient(patient_name, patient_id, blood_type)
     find_patient = Patient.objects.raw({"_id": 555}).first()
     find_patient.delete()
-    assert answer.name == patient_name
+    assert answer.name == patient_namef
