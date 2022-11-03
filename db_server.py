@@ -119,4 +119,5 @@ def validate_test_info(in_data):
 
 if __name__ == "__main__":
     init_server()
-    app.run()
+    app.run(host='0.0.0.0')
+
