@@ -24,10 +24,12 @@ OR
 
 """
 
-db = [] # Define globally so we don't have to use init_server to simply create this list
-
+from pymodm import connect, MongoModel, fields
 from flask import Flask, request, jsonify
+from database_definition import Patient
+
 app = Flask(__name__)
+
 
 @app.route("/", methods=["GET"])
 def server_on():
@@ -35,15 +37,16 @@ def server_on():
 
 
 def add_patient(patient_name, patient_id, blood_type):
-    new_patient = {"name": patient_name,
-                   "id": patient_id,
-                   "blood_type": blood_type,
-                   "test_name": [],
-                   "test_result": []}
-    db.append(new_patient)
+    new_patient = Patient(name=patient_name,
+                          id=patient_id,
+                          blood_type=blood_type)
+    added_patient = new_patient.save()
+    return added_patient
 
 
 def init_server():
+    connect("mongodb+srv://nikhilgadiraju:547nik0314@bme547.yzyab75.mongodb.net/"
+            "db_server?retryWrites=true&w=majority")
     add_patient("Ann Ables", 1, "A+")
     add_patient("Bob Boyles", 2, "B+")
     # initialize logging
@@ -63,7 +66,8 @@ def add_new_patient_to_server():
 def add_new_patient_worker(in_data):
     result = validate_new_patient_info(in_data)
     if result is not True:
-        return result, 400  # Specify 400 status code (tells user request is not valid)
+        # Specify 400 status code (tells user request is not valid)
+        return result, 400
     add_patient(in_data["name"],
                 in_data["id"],
                 in_data["blood_type"])
@@ -95,11 +99,11 @@ def add_test_worker(in_data):
     result = validate_test_info(in_data)
     if result is not True:
         return result, 400
-    for dict in db:
-        if in_data['id'] == dict['id']:
-            dict["test_name"] = in_data["test_name"]
-            dict["test_result"] = in_data["test_result"]
-            return "Tests successfully added", 200
+    # for dict in db:
+    #     if in_data['id'] == dict['id']:
+    #         dict["test_name"] = in_data["test_name"]
+    #         dict["test_result"] = in_data["test_result"]
+    #         return "Tests successfully added", 200
     return "invalid patient ID", 400
 
 
