@@ -23,8 +23,10 @@ def main_window():
     root.title("Blood Donor Database")
     # root.geometry("600x300")
 
+    # sticky is based on "n", "s", "e", "w", and even northwest and other
+    # directions ("nw"). Can also use tk version (tk.W)
     ttk.Label(root, text="Blood Donor Database").grid(column=0, row=0,
-                                                      columnspan=2)
+                                                      columnspan=2, sticky=tk.W)
     ttk.Label(root, text="Name:").grid(column=0, row=1)
 
     # This special variable can be connected to a GUI widget to get information
@@ -33,22 +35,22 @@ def main_window():
 
     # Default size of 30 characters
     ttk.Entry(root, width=50, textvariable=patient_name_entry).grid(
-        column=1, row=1)
+        column=1, row=1, sticky=tk.W)
 
-    ttk.Label(root, text="ID:").grid(column=0, row=2)
+    ttk.Label(root, text="ID:").grid(column=0, row=2, sticky=tk.E)
     patient_id_entry = tk.StringVar()
     ttk.Entry(root, textvariable=patient_id_entry).grid(
-        column=1, row=2)
+        column=1, row=2, sticky=tk.W)
 
     blood_letter_selection = tk.StringVar()
     ttk.Radiobutton(root, text="A", variable=blood_letter_selection,
-                    value="A").grid(column=0, row=3)
+                    value="A").grid(column=0, row=3, sticky=tk.W)
     ttk.Radiobutton(root, text="B", variable=blood_letter_selection,
-                    value="B").grid(column=0, row=4)
+                    value="B").grid(column=0, row=4, sticky=tk.W)
     ttk.Radiobutton(root, text="AB", variable=blood_letter_selection,
-                    value="AB").grid(column=0, row=5)
+                    value="AB").grid(column=0, row=5, sticky=tk.W)
     ttk.Radiobutton(root, text="O", variable=blood_letter_selection,
-                    value="O").grid(column=0, row=6)
+                    value="O").grid(column=0, row=6, sticky=tk.W)
 
     rh_button = tk.StringVar()
     ttk.Checkbutton(root, text="Rh Positive?", variable=rh_button,
@@ -61,11 +63,12 @@ def main_window():
     donor_center_combo["values"] = ["Durham", "Cary", "Raleigh"]
     donor_center_combo.state(["readonly"])
 
-    ttk.Button(root, text="Ok", command=ok_cmd).grid(column=1, row=6)
-    ttk.Button(root, text="Cancel", command=cancel_cmd).grid(column=2, row=6)
+    ttk.Button(root, text="Ok", command=ok_cmd).grid(column=1, row=7)
+    ttk.Button(root, text="Cancel", command=cancel_cmd).grid(
+        column=2, row=6, sticky=tk.E)
 
     other_button = ttk.Button(root, text="Other", state=tk.DISABLED)
-    other_button.grid(column=2, row=7)
+    other_button.grid(column=2, row=7, sticky=tk.E)
 
     root.mainloop()
 
