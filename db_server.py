@@ -45,7 +45,7 @@ def add_patient(patient_name, patient_id, blood_type):
 
 
 def init_server():
-    connect("mongodb+srv://nikhilgadiraju:<password>@bme547.yzyab75.mongodb.net/"
+    connect("mongodb+srv://nikhilgadiraju:547nik0314@bme547.yzyab75.mongodb.net/"
             "db_server?retryWrites=true&w=majority")
     add_patient("Ann Ables", 1, "A+")
     add_patient("Bob Boyles", 2, "B+")

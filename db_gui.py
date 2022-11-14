@@ -1,23 +1,62 @@
 import tkinter as tk
 from tkinter import ttk
+import db_client
+from PIL import Image, ImageTk
+from tkinter import filedialog
+
+
+def create_blood_type(letter, rh):
+    output = "{}{}".format(letter, rh)
+    return output
+
+
+def upload_data_to_server(patient_name, patient_id, patient_blood_letter,
+                          patient_rh_factor):
+    blood_type = create_blood_type(patient_blood_letter, patient_rh_factor)
+    msg, code = db_client.upload_patient_info(
+        patient_name, int(patient_id), blood_type)
+    return msg
 
 
 def main_window():
 
     def ok_cmd():
-        other_button.configure(state=tk.NORMAL)
+        # Get data from interface
         if rh_button.get() == "":
             print("Choose a Rh factor")
             return
-        print("Patient name: {}".format(patient_name_entry.get()))
-        print("Patient ID: {}".format(patient_id_entry.get()))
-        print("Blood type: {}{}".format(
-            blood_letter_selection.get(), rh_button.get()))
-        print("Donation Center: {}".format(donor_center.get()))
-        print("Clicked Ok button")
+        patient_name = patient_name_entry.get()
+        patient_id = patient_id_entry.get()
+        patient_blood_letter = blood_letter_selection.get()
+        patient_rh_factor = rh_button.get()
+
+        # Call other testable functinos to do all the work
+        msg = upload_data_to_server(patient_name, patient_id,
+                                    patient_blood_letter, patient_rh_factor)
+
+        # Update GUI based on results of other functions
+        status_label.configure(text=msg)
 
     def cancel_cmd():
         root.destroy()
+
+    def picture_button_cmd():
+        # Will only test with JPG images
+        new_file = "Images/blue_devil.jpg"
+        new_file = filedialog.askopenfilename()
+        print("Filename: {}".format(new_file))
+        pil_image = Image.open(new_file)
+        x_size, y_size = pil_image.size
+        new_y = 100
+        new_x = new_y * (x_size/y_size)
+        pil_image = pil_image.resize((round(new_x), round(new_y)))
+        tk_image = ImageTk.PhotoImage(pil_image)
+        image_label.configure(image=tk_image)
+        # Anytime an image is added to a label, always create the '.image'
+        # attribute so Python doesn't discard the 'tk_image' defined within
+        # this function locally
+        # Adding new attribute to the class ttk label
+        image_label.image = tk_image
 
     root = tk.Tk()
     root.title("Blood Donor Database")
@@ -69,6 +108,20 @@ def main_window():
 
     other_button = ttk.Button(root, text="Other", state=tk.DISABLED)
     other_button.grid(column=2, row=7, sticky=tk.E)
+
+    picture_button = ttk.Button(
+        root, text="Load Picture", command=picture_button_cmd)
+    picture_button.grid(column=2, row=8)
+
+    status_label = ttk.Label(root, text="Status")
+    status_label.grid(column=0, row=8)
+
+    pil_image = Image.open("Images/blank_pic.jpg")
+    pil_image = pil_image.resize((100, 100))
+    tk_image = ImageTk.PhotoImage(pil_image)
+    image_label = ttk.Label(root, image=tk_image)
+    image_label.image = tk_image
+    image_label.grid(column=1, row=8)
 
     root.mainloop()
 
